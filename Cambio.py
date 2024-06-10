@@ -30,7 +30,9 @@ def makeDeck():
 
     return standardDeck
 
-
+# list of options a player has in a turn
+def playerTurn(player, otherPlayer):
+    print("1: Draw a card\n2: Call Cambio\n3: Stack")
 
 
 
@@ -38,6 +40,7 @@ def main():
     print("Welcome to Cambio")
     
     deck = makeDeck()
+    discardPile = []
     
     # shuffle deck
     random.shuffle(deck)
@@ -70,8 +73,12 @@ def main():
     print()
 
     # now the game actually begins, use a while loop
-        
-
+    # with two players, a fullTurn is equal to two playerTurns
+    playerTurns = 0
+    while True:
+        playerTurn(players[playerTurns % 2], players[playerTurns+1 % 2])
+        playerTurns += 1
+        break
 
 
 
