@@ -1,9 +1,12 @@
 import random
 
 class Player:
-    def __init__(self, name):
+    
+    def __init__(self, name, hand):
         self.name = name
-       # hand = getHand()
+        self.hand = hand
+        numCards = 4
+        
 
 
 # deck of cards
@@ -28,34 +31,39 @@ def makeDeck():
 
 def main():
     print("Welcome to Cambio")
-  #  player1 = Player(input("Player 1's name: "))
-  #  player2 = Player(input("Player 2's name: "))
+    
     deck = makeDeck()
     
     # shuffle deck
     random.shuffle(deck)
-    
-    player1Hand = []
-    player2Hand = []
 
+    playerHand = []
     for _ in range(4):
-        player1Hand.append(deck.pop())
-        player2Hand.append(deck.pop())
+        playerHand.append(deck.pop())
+
+    name = input("Player 1 name: ")
+
+    player1 = Player(name, playerHand)
+
+    playerHand = []
+    for _ in range(4):
+        playerHand.append(deck.pop())
+
+    name = input("Player 2 name: ")
+    player2 = Player(name, playerHand)
+
+    players = [player1, player2]
+    
+    
 
     # show each player their two cards out of four
-    print("Player 1's hand: ")
-    for i in range(4):
-        if i < 2: 
-            print(player1Hand[i] + ", ")
-        else:
-            print("? ")
-    print()
-    print("Player 2's hand: ")
-    for i in range(4):
-        if i < 2: 
-            print(player2Hand[i] + ", ")
-        else:
-            print("? ")
+    for player in players:
+        print(player.name + "'s hand:")
+        for card in player.hand:
+            print(card + " ")
+
+
+
     print()
 
     # now the game actually begins, use a while loop
