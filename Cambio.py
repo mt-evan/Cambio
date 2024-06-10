@@ -6,6 +6,11 @@ class Player:
         self.name = name
         self.hand = hand
         numCards = 4
+
+    def printHand(self):
+        print(self.name + "'s hand:")
+        for card in self.hand:
+            print(card)
         
 
 
@@ -42,7 +47,6 @@ def main():
         playerHand.append(deck.pop())
 
     name = input("Player 1 name: ")
-
     player1 = Player(name, playerHand)
 
     playerHand = []
@@ -58,9 +62,8 @@ def main():
 
     # show each player their two cards out of four
     for player in players:
-        print(player.name + "'s hand:")
-        for card in player.hand:
-            print(card + " ")
+        print()
+        player.printHand()
 
 
 
