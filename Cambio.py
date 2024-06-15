@@ -17,6 +17,29 @@ class Player:
         self.hand[i] = newCard
         return discardCard
 
+    def printScore(self):
+        score = 0
+        for i in range(len(self.hand)):
+            for card in self.hand:
+                if 'Joker' in card:
+                    continue  # Jokers have 0 points, so no need to add anything
+                rank, suit = card.split()[0], card.split()[-1]
+                if rank.isdigit():
+                    score += int(rank)
+                elif rank == 'Ace':
+                    score += 1
+                elif rank == 'Jack':
+                    score += 11
+                elif rank == 'Queen':
+                    score += 12
+                elif rank == 'King':
+                    if suit in ['Hearts', 'Diamonds']:
+                        score += -1  # Red Kings
+                    else:
+                        score += 13  # Black Kings
+        print(f"{self.name}'s score: {score}")
+        return score
+
     
         
 
@@ -51,6 +74,22 @@ def drawCard(player, otherPlayer):
         discardCard = player.replaceCard(choice, card)
         discardPile.append(discardCard)
         print("Card discarded is a " + discardCard)
+
+def callCambio(player, otherPlayer):
+    print(player.name + " has called Cambio")
+    # otherPlayer gets one last turn
+    drawCard(otherPlayer, player)
+    player.printHand
+    otherPlayer.printHand
+    playerScore = player.printScore()
+    otherPlayerScore = otherPlayer.printScore()
+    if playerScore > otherPlayerScore:
+        print(player.name + " wins the game")
+    elif playerScore < otherPlayerScore:
+        print(otherPlayer.name + " wins the game")
+    else:
+        print("Game is a draw")
+
 
 # list of options a player has in a turn
 def playerTurn(player, otherPlayer):
@@ -107,7 +146,6 @@ def main():
     while True:
         playerTurn(players[playerTurns % 2], players[playerTurns+1 % 2])
         playerTurns += 1
-        break
 
 
 
