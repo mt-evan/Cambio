@@ -1,4 +1,5 @@
 import random
+import sys
 
 cambioCalled = False
 
@@ -54,6 +55,10 @@ class Player:
         else:
             print(f"{self.name} correctly stacked a " + topCard)
             discardPile.append(self.hand.pop(i))
+
+        if len(self.hand) == 0:
+            print(f"{self.name} has no more cards and won")
+            sys.exit(0)
     
     def stackOpponentCard(self, i, opponent):
         topCard = discardPile[-1]
@@ -74,6 +79,11 @@ class Player:
                 print(i)
             choice = int(input())-1
             opponent.hand[i] = self.hand.pop(choice)
+
+        if len(self.hand) == 0:
+            print(f"{self.name} has no more cards and won")
+            sys.exit(0)
+
 
 # deck of cards
 def makeDeck():
