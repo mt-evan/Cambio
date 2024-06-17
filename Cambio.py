@@ -75,8 +75,8 @@ class Player:
             print(f"{self.name} correctly stacked a " + topCard + f" from {opponent.name}")
             discardPile.append(opponent.hand[i])
             print("Choose a card to give")
-            for i in self.numCards:
-                print(i)
+            for i in range(len(self.hand)):
+                print(i+1)
             choice = int(input())-1
             opponent.hand[i] = self.hand.pop(choice)
 
@@ -228,6 +228,7 @@ def playerTurn(player, otherPlayer):
     else:
         checkDeck()
         callCambio(player, otherPlayer)
+        return
     choice = input("1: Don't stack\n2: Stack\n")
     if choice == '2':
         stack(player, otherPlayer)
