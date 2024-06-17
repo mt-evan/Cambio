@@ -6,12 +6,12 @@ class Player:
     def __init__(self, name, hand):
         self.name = name
         self.hand = hand
-        self.numCards = len(hand)
 
     def printHand(self):
         print(self.name + "'s hand:")
         for card in self.hand:
             print(card)
+        print()
 
     def replaceCard(self, i, newCard):
         discardCard = self.hand[i]
@@ -67,7 +67,7 @@ class Player:
             print(f"Incorrect stack, {self.name} draws an extra card")
             self.hand.append(deck.pop())
         else:
-            print(f"{self.name} correctly stacked a " + topCard + " from " + {opponent.name})
+            print(f"{self.name} correctly stacked a " + topCard + f" from {opponent.name}")
             discardPile.append(opponent.hand[i])
             print("Choose a card to give")
             for i in self.numCards:
@@ -101,7 +101,7 @@ def drawCard(player, otherPlayer):
         isSpecialCard(card, player, otherPlayer)
     else:
         print("Choose a card to replace")
-        for i in range(player.numCards):
+        for i in range(len(player.hand)):
             print(i+1)
         choice = int(input())-1
         discardCard = player.replaceCard(choice, card)
@@ -128,14 +128,14 @@ def isSpecialCard(card, player, otherPlayer):
     
 def viewCard(player):
     print(f"Select card to view from {player.name}")
-    for i in range(player.numCards):
+    for i in range(len(player.hand)):
         print(i+1)
     choice = int(input())-1
     print(player.hand[choice])
 
 def viewCard(player):
     print(f"Select card to view from {player.name}")
-    for i in range(player.numCards):
+    for i in range(len(player.hand)):
         print(i+1)
     choice = int(input())-1
     print(player.hand[choice])
@@ -145,11 +145,11 @@ def blindSwap(player, otherPlayer):
     choice = input("Blind swap?\n1: Yes\n2: No")
     if choice == '1':
         print("List of your cards:")
-        for i in range(player.numCards):
+        for i in range(len(player.hand)):
             print(i+1)
         playerCard = int(input("Card: "))-1
         print("List of opponent's cards:")
-        for i in range(otherPlayer.numCards):
+        for i in range(len(otherPlayer.hand)):
             print(i+1)
         otherPlayerCard = int(input("Card: "))-1
 
@@ -169,14 +169,14 @@ def kingSwap(player, otherPlayer):
 def stack(player, otherPlayer):
     choice = input(f"1: Stack from your deck\n2: Stack from {otherPlayer.name}'s deck")
     if choice == '1':
-        choice = input("Choose a card to stack")
-        for i in range(player.numCards):
+        print("Choose a card to stack")
+        for i in range(len(player.hand)):
             print(i+1)
         choice = int(input())-1
         player.stackOwnCard(choice)
     else:
-        choice = input("Choose a card to stack")
-        for i in range(otherPlayer.numCards):
+        print("Choose a card to stack")
+        for i in range(len(otherPlayer.hand)):
             print(i+1)
         choice = int(input())-1
         player.stackOpponentCard(choice, otherPlayer)
@@ -185,6 +185,7 @@ def callCambio(player, otherPlayer):
     global cambioCalled
     cambioCalled = True
     print(player.name + " has called Cambio")
+    print(otherPlayer.name + "'s final turn")
     # otherPlayer gets one last turn
     drawCard(otherPlayer, player)
     player.printHand
@@ -201,8 +202,11 @@ def callCambio(player, otherPlayer):
 
 # list of options a player has in a turn
 def playerTurn(player, otherPlayer):
+    print()
     checkDeck()
     print(player.name + "'s turn:")
+    player.printHand()
+    otherPlayer.printHand()
     choice = input("1: Don't stack\n2: Stack\n")
     if choice == '2':
         stack(player, otherPlayer)
